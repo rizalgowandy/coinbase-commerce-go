@@ -26,7 +26,6 @@ package main
 import (
 	"context"
 	"log"
-	"time"
 
 	"github.com/benalucorp/coinbase-commerce-go"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
@@ -68,4 +67,37 @@ func main() {
 }
 ```
 
+### [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
 
+```go
+package main
+
+import (
+	"context"
+	"log"
+	
+	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+)
+
+func main() {
+	client, err := coinbase.NewClient(coinbase.Config{
+		Key: "REPLACE_WITH_YOUR_API_KEY",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Provide either code or id.
+	resp, err := client.ShowCharge(context.Background(), &entity.ShowChargeReq{
+		ChargeCode: "3HDDCCV8",
+		ChargeID:   "",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("%+v", resp)
+}
+```
