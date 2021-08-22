@@ -1,4 +1,8 @@
+[![Go Doc](https://pkg.go.dev/badge/github.com/benalucorp/coinbase-commerce-go?status.svg)](https://pkg.go.dev/github.com/benalucorp/coinbase-commerce-go?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benalucorp/coinbase-commerce-go)](https://goreportcard.com/report/github.com/benalucorp/coinbase-commerce-go)
+[![Build Status](https://github.com/benalucorp/coinbase-commerce-go/workflows/Go/badge.svg?branch=main)](https://github.com/benalucorp/coinbase-commerce-go/actions?query=branch%3Amain)
+[![Sourcegraph](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go/-/badge.svg)](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go?badge)
+[![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/benalucorp/coinbase-commerce-go)](https://www.tickgit.com/browse?repo=github.com/benalucorp/coinbase-commerce-go)
 
 ![gdk](https://socialify.git.ci/benalucorp/coinbase-commerce-go/image?description=1&descriptionEditable=Accept%20cryptocurrency%20using%20Coinbase%20Commerce%20API.&font=Inter&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F1885080%3Fs%3D280%26v%3D4&owner=1&pattern=Floating%20Cogs&theme=Light)
 
@@ -42,7 +46,7 @@ func main() {
 
 	resp, err := client.CreateCharge(context.Background(), &entity.CreateChargeReq{
 		Name:        "The Sovereign Individual",
-		Description: "Mastering the Transition to the Information Age",
+		Description: "maining the Transition to the Information Age",
 		LocalPrice: entity.CreateChargePrice{
 			Amount:   "100.00",
 			Currency: "USD",
