@@ -1,4 +1,5 @@
 [![Go Doc](https://pkg.go.dev/badge/github.com/benalucorp/coinbase-commerce-go?status.svg)](https://pkg.go.dev/github.com/benalucorp/coinbase-commerce-go?tab=doc)
+[![Release](https://img.shields.io/github/release/benalucorp/coinbase-commerce-go.svg?style=flat-square)](https://github.com/benalucorp/coinbase-commerce-go/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benalucorp/coinbase-commerce-go)](https://goreportcard.com/report/github.com/benalucorp/coinbase-commerce-go)
 [![Build Status](https://github.com/benalucorp/coinbase-commerce-go/workflows/Go/badge.svg?branch=main)](https://github.com/benalucorp/coinbase-commerce-go/actions?query=branch%3Amain)
 [![Sourcegraph](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go/-/badge.svg)](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go?badge)
