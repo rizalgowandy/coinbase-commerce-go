@@ -124,9 +124,11 @@ func (c Client) ListCharges(ctx context.Context, req *entity.ListChargesReq) (*e
 // CancelCharge cancels a charge that has been previously created.
 // Supply the unique charge code or id that was returned when the charge was created.
 // This information is also returned when a charge is first created.
+//
 // Note:
 // Only new charges can be successfully canceled.
 // Once payment is detected, charge can no longer be canceled.
+//
 // Reference: https://commerce.coinbase.com/docs/api/#cancel-a-charge
 func (c Client) CancelCharge(ctx context.Context, req *entity.CancelChargeReq) (*entity.CancelChargeResp, error) {
 	if c.charges == nil {
@@ -142,4 +144,28 @@ func (c Client) CancelCharge(ctx context.Context, req *entity.CancelChargeReq) (
 	}
 
 	return c.charges.Cancel(ctx, req)
+}
+
+// ResolveCharge resolves a charge that has been previously marked as unresolved.
+// Supply the unique charge code or id that was returned when the charge was created.
+// This information is also returned when a charge is first created.
+//
+// Note:
+// Only unresolved charges can be successfully resolved
+//
+// Reference: https://commerce.coinbase.com/docs/api/#resolve-a-charge
+func (c Client) ResolveCharge(ctx context.Context, req *entity.ResolveChargeReq) (*entity.ResolveChargeResp, error) {
+	if c.charges == nil {
+		return nil, errors.New("client: initialize first")
+	}
+
+	if req == nil {
+		return nil, errors.New("payload: missing")
+	}
+
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	return c.charges.Resolve(ctx, req)
 }
