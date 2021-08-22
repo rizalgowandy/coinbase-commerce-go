@@ -79,7 +79,10 @@ For more example check [here](main_integration_test.go).
 
 ## Supported API
 
+Version: 2018-03-22
+
 - Charges:
-   - Create a charge: https://commerce.coinbase.com/docs/api/#create-a-charge
-   - Show a charge: https://commerce.coinbase.com/docs/api/#show-a-charge
-   - List charges: https://commerce.coinbase.com/docs/api/#list-charges
+   - [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
+   - [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
+   - [List charges](https://commerce.coinbase.com/docs/api/#list-charges)
+   - [Cancel a charge](https://commerce.coinbase.com/docs/api/#cancel-a-charge)

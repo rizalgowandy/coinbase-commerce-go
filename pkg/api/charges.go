@@ -17,7 +17,7 @@ type Charges struct {
 	client *resty.Client
 }
 
-func (a *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
+func (c *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
 	url := "/charges"
 
 	var (
@@ -25,7 +25,7 @@ func (a *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*ent
 		contentErr entity.ErrResp
 	)
 
-	_, err := a.client.R().
+	_, err := c.client.R().
 		SetContext(ctx).
 		SetHeader("Content-Type", "application/json").
 		SetBody(req).
@@ -43,7 +43,7 @@ func (a *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*ent
 	return &content, nil
 }
 
-func (a *Charges) Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error) {
+func (c *Charges) Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error) {
 	url := "/charges/{identifier}"
 
 	var (
@@ -51,7 +51,7 @@ func (a *Charges) Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.
 		contentErr entity.ErrResp
 	)
 
-	_, err := a.client.R().
+	_, err := c.client.R().
 		SetContext(ctx).
 		SetPathParam("identifier", req.Identifier()).
 		SetResult(&content).
@@ -68,7 +68,7 @@ func (a *Charges) Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.
 	return &content, nil
 }
 
-func (a *Charges) List(ctx context.Context, req *entity.ListChargesReq) (*entity.ListChargesResp, error) {
+func (c *Charges) List(ctx context.Context, req *entity.ListChargesReq) (*entity.ListChargesResp, error) {
 	url := "/charges"
 
 	var (
@@ -76,12 +76,38 @@ func (a *Charges) List(ctx context.Context, req *entity.ListChargesReq) (*entity
 		contentErr entity.ErrResp
 	)
 
-	_, err := a.client.R().
+	_, err := c.client.R().
 		SetContext(ctx).
 		SetQueryParams(req.QueryParams()).
 		SetResult(&content).
 		SetError(&contentErr).
 		Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	if contentErr.Valid() {
+		return nil, contentErr.Error
+	}
+
+	return &content, nil
+}
+
+func (c *Charges) Cancel(ctx context.Context, req *entity.CancelChargeReq) (*entity.CancelChargeResp, error) {
+	url := "/charges/{identifier}/cancel"
+
+	var (
+		content    entity.CancelChargeResp
+		contentErr entity.ErrResp
+	)
+
+	_, err := c.client.R().
+		SetContext(ctx).
+		SetPathParam("identifier", req.Identifier()).
+		SetBody(req).
+		SetResult(&content).
+		SetError(&contentErr).
+		Post(url)
 	if err != nil {
 		return nil, err
 	}
