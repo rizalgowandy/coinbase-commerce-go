@@ -63,9 +63,9 @@ func main() {
 	}
 	log.Printf("%+v", createResp)
 
-	// Show a charge.
+	// Show a charge by providing either the code or id.
 	showResp, err := client.ShowCharge(context.Background(), &entity.ShowChargeReq{
-		ChargeCode: createResp.Data.Code, // Provide either code or id.
+		ChargeCode: createResp.Data.Code,
 		ChargeID:   "",
 	})
 	if err != nil {
