@@ -17,10 +17,7 @@ type Charges struct {
 	client *resty.Client
 }
 
-func (a *Charges) Create(
-	ctx context.Context,
-	req *entity.CreateChargeReq,
-) (*entity.CreateChargeResp, error) {
+func (a *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
 	url := "/charges"
 
 	var (
@@ -34,6 +31,31 @@ func (a *Charges) Create(
 		SetResult(&content).
 		SetError(&contentErr).
 		Post(url)
+	if err != nil {
+		return nil, err
+	}
+
+	if contentErr.Valid() {
+		return nil, contentErr.Error
+	}
+
+	return &content, nil
+}
+
+func (a *Charges) Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error) {
+	url := "/charges/{identifier}"
+
+	var (
+		content    entity.ShowChargeResp
+		contentErr entity.ErrResp
+	)
+
+	_, err := a.client.R().
+		SetContext(ctx).
+		SetPathParam("identifier", req.Identifier()).
+		SetResult(&content).
+		SetError(&contentErr).
+		Get(url)
 	if err != nil {
 		return nil, err
 	}

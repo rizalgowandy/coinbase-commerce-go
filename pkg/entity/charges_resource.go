@@ -2,32 +2,33 @@ package entity
 
 import (
 	"time"
+
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
 // Reference: https://commerce.coinbase.com/docs/api/#charge-resource
 
 type ChargeResource struct {
-	ID          string    `json:"id"`
-	Resource    string    `json:"resource"`
-	Code        string    `json:"code"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	LogoURL     string    `json:"logo_url"`
-	HostedURL   string    `json:"hosted_url"`
-	CreatedAt   time.Time `json:"created_at"`
-	ExpiresAt   time.Time `json:"expires_at"`
-	ConfirmedAt time.Time `json:"confirmed_at"`
+	ID          string        `json:"id"`
+	Resource    enum.Resource `json:"resource"`
+	Code        string        `json:"code"`
+	Name        string        `json:"name"`
+	Description string        `json:"description"`
+	LogoURL     string        `json:"logo_url"`
+	HostedURL   string        `json:"hosted_url"`
+	CreatedAt   time.Time     `json:"created_at"`
+	ExpiresAt   time.Time     `json:"expires_at"`
+	ConfirmedAt time.Time     `json:"confirmed_at"`
 	Checkout    struct {
 		ID string `json:"id"`
 	} `json:"checkout"`
 	Timeline []struct {
-		Time    time.Time `json:"time"`
-		Status  string    `json:"status"`
-		Context string    `json:"context,omitempty"`
+		Time    time.Time                    `json:"time"`
+		Status  enum.ChargeStatus            `json:"status"`
+		Context enum.ChargeUnresolvedContext `json:"context,omitempty"`
 	} `json:"timeline"`
-	Metadata struct {
-	} `json:"metadata"`
-	PricingType string `json:"pricing_type"`
+	Metadata    struct{}         `json:"metadata"`
+	PricingType enum.PricingType `json:"pricing_type"`
 	Pricing     struct {
 		Local struct {
 			Amount   string `json:"amount"`
@@ -37,10 +38,30 @@ type ChargeResource struct {
 			Amount   string `json:"amount"`
 			Currency string `json:"currency"`
 		} `json:"bitcoin"`
+		BitcoinCash struct {
+			Amount   string `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"bitcoin_cash"`
 		Ethereum struct {
 			Amount   string `json:"amount"`
 			Currency string `json:"currency"`
 		} `json:"ethereum"`
+		Litecoin struct {
+			Amount   string `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"litecoin"`
+		Dogecoin struct {
+			Amount   string `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"dogecoin"`
+		USDC struct {
+			Amount   string `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"usdc"`
+		Dai struct {
+			Amount   string `json:"amount"`
+			Currency string `json:"currency"`
+		} `json:"dai"`
 	} `json:"pricing"`
 	PaymentThreshold struct {
 		OverpaymentAbsoluteThreshold struct {
@@ -81,7 +102,12 @@ type ChargeResource struct {
 		} `json:"block"`
 	} `json:"payments"`
 	Addresses struct {
-		Bitcoin  string `json:"bitcoin"`
-		Ethereum string `json:"ethereum"`
+		Bitcoin     string `json:"bitcoin"`
+		BitcoinCash string `json:"bitcoin_cash"`
+		Ethereum    string `json:"ethereum"`
+		Litecoin    string `json:"litecoin"`
+		Dogecoin    string `json:"dogecoin"`
+		USDC        string `json:"usdc"`
+		Dai         string `json:"dai"`
 	} `json:"addresses"`
 }

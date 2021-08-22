@@ -1,4 +1,8 @@
+[![Go Doc](https://pkg.go.dev/badge/github.com/benalucorp/coinbase-commerce-go?status.svg)](https://pkg.go.dev/github.com/benalucorp/coinbase-commerce-go?tab=doc)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benalucorp/coinbase-commerce-go)](https://goreportcard.com/report/github.com/benalucorp/coinbase-commerce-go)
+[![Build Status](https://github.com/benalucorp/coinbase-commerce-go/workflows/Go/badge.svg?branch=main)](https://github.com/benalucorp/coinbase-commerce-go/actions?query=branch%3Amain)
+[![Sourcegraph](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go/-/badge.svg)](https://sourcegraph.com/github.com/benalucorp/coinbase-commerce-go?badge)
+[![TODOs](https://badgen.net/https/api.tickgit.com/badgen/github.com/benalucorp/coinbase-commerce-go)](https://www.tickgit.com/browse?repo=github.com/benalucorp/coinbase-commerce-go)
 
 ![gdk](https://socialify.git.ci/benalucorp/coinbase-commerce-go/image?description=1&descriptionEditable=Accept%20cryptocurrency%20using%20Coinbase%20Commerce%20API.&font=Inter&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F1885080%3Fs%3D280%26v%3D4&owner=1&pattern=Floating%20Cogs&theme=Light)
 
@@ -9,12 +13,10 @@ Most requests to the Commerce API must be authenticated with an API key. You can
 ## Installation
 
 ```shell
-$ go get github.com/benalucorp/coinbase-commerce-go
+go get -v github.com/benalucorp/coinbase-commerce-go
 ```
 
-## Charges
-
-### [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
+## Quick Start
 
 ```go
 package main
@@ -22,10 +24,10 @@ package main
 import (
 	"context"
 	"log"
-	"time"
 
 	"github.com/benalucorp/coinbase-commerce-go"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
 func main() {
@@ -47,7 +49,7 @@ func main() {
 			Amount:   "100.00",
 			Currency: "USD",
 		},
-		PricingType: "fixed_price",
+		PricingType: enum.PricingTypeFixedPrice,
 		Metadata: entity.CreateChargeMetadata{
 			CustomerID:   "id_1005",
 			CustomerName: "Satoshi Nakamoto",
@@ -63,4 +65,43 @@ func main() {
 }
 ```
 
+## Charges
 
+### [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
+
+
+
+### [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
+
+```go
+package main
+
+import (
+	"context"
+	"log"
+	
+	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+)
+
+func main() {
+	client, err := coinbase.NewClient(coinbase.Config{
+		Key: "REPLACE_WITH_YOUR_API_KEY",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Provide either code or id.
+	resp, err := client.ShowCharge(context.Background(), &entity.ShowChargeReq{
+		ChargeCode: "3HDDCCV8",
+		ChargeID:   "",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Printf("%+v", resp)
+}
+```
