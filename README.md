@@ -16,9 +16,7 @@ Most requests to the Commerce API must be authenticated with an API key. You can
 go get -v github.com/benalucorp/coinbase-commerce-go
 ```
 
-## Charges
-
-### [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
+## Quick Start
 
 ```go
 package main
@@ -66,6 +64,12 @@ func main() {
 	log.Printf("%+v", resp)
 }
 ```
+
+## Charges
+
+### [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
+
+
 
 ### [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
 
