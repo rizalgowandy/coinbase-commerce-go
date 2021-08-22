@@ -60,3 +60,14 @@ func (s ShowChargeReq) Identifier() string {
 type ShowChargeResp struct {
 	Data ChargeResource `json:"data"`
 }
+
+// Reference: https://commerce.coinbase.com/docs/api/#list-charges
+
+type ListChargesReq struct {
+	PaginationReq
+}
+
+type ListChargesResp struct {
+	Pagination PaginationResp   `json:"pagination"`
+	Data       []ChargeResource `json:"data"`
+}

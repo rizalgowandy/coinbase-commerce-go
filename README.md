@@ -75,8 +75,11 @@ func main() {
 }
 ```
 
+For more example check [here](main_integration_test.go).
+
 ## Supported API
 
 - Charges:
    - Create a charge: https://commerce.coinbase.com/docs/api/#create-a-charge
    - Show a charge: https://commerce.coinbase.com/docs/api/#show-a-charge
+   - List charges: https://commerce.coinbase.com/docs/api/#list-charges

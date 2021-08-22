@@ -78,13 +78,11 @@ linters:
     - exhaustive
     - funlen
     - gochecknoinits
-    - goconst
     - gocritic
     - gocyclo
     - gofmt
     - goimports
     - golint
-    - gomnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -109,6 +107,8 @@ linters:
     - whitespace
 
   # don't enable:
+  # - goconst
+  # - gomnd
   # - asciicheck
   # - gochecknoglobals
   # - gocognit
