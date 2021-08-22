@@ -27,6 +27,7 @@ func (a *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*ent
 
 	_, err := a.client.R().
 		SetContext(ctx).
+		SetHeader("Content-Type", "application/json").
 		SetBody(req).
 		SetResult(&content).
 		SetError(&contentErr).
