@@ -118,3 +118,29 @@ func (c *Charges) Cancel(ctx context.Context, req *entity.CancelChargeReq) (*ent
 
 	return &content, nil
 }
+
+func (c *Charges) Resolve(ctx context.Context, req *entity.ResolveChargeReq) (*entity.ResolveChargeResp, error) {
+	url := "/charges/{identifier}/resolve"
+
+	var (
+		content    entity.ResolveChargeResp
+		contentErr entity.ErrResp
+	)
+
+	_, err := c.client.R().
+		SetContext(ctx).
+		SetPathParam("identifier", req.Identifier()).
+		SetBody(req).
+		SetResult(&content).
+		SetError(&contentErr).
+		Post(url)
+	if err != nil {
+		return nil, err
+	}
+
+	if contentErr.Valid() {
+		return nil, contentErr.Error
+	}
+
+	return &content, nil
+}

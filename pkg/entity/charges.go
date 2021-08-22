@@ -98,3 +98,30 @@ func (c CancelChargeReq) Identifier() string {
 type CancelChargeResp struct {
 	Data ChargeResource `json:"data"`
 }
+
+// Reference: https://commerce.coinbase.com/docs/api/#resolve-a-charge
+
+type ResolveChargeReq struct {
+	ChargeCode string `json:"charge_code"`
+	ChargeID   string `json:"charge_id"`
+}
+
+func (r ResolveChargeReq) Validate() error {
+	if r.ChargeCode == "" && r.ChargeID == "" {
+		return errors.New("payload: at least one of [code, id] must be supplied")
+	}
+	return nil
+}
+
+// Identifier returns identifier for current request.
+// Charge code has higher priority than id.
+func (r ResolveChargeReq) Identifier() string {
+	if r.ChargeCode != "" {
+		return r.ChargeCode
+	}
+	return r.ChargeID
+}
+
+type ResolveChargeResp struct {
+	Data ChargeResource `json:"data"`
+}
