@@ -13,7 +13,7 @@ Most requests to the Commerce API must be authenticated with an API key. You can
 ## Installation
 
 ```shell
-$ go get github.com/benalucorp/coinbase-commerce-go
+go get -v github.com/benalucorp/coinbase-commerce-go
 ```
 
 ## Charges
@@ -30,6 +30,7 @@ import (
 
 	"github.com/benalucorp/coinbase-commerce-go"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
 func main() {
@@ -46,12 +47,12 @@ func main() {
 
 	resp, err := client.CreateCharge(context.Background(), &entity.CreateChargeReq{
 		Name:        "The Sovereign Individual",
-		Description: "maining the Transition to the Information Age",
+		Description: "Mastering the Transition to the Information Age",
 		LocalPrice: entity.CreateChargePrice{
 			Amount:   "100.00",
 			Currency: "USD",
 		},
-		PricingType: "fixed_price",
+		PricingType: enum.PricingTypeFixedPrice,
 		Metadata: entity.CreateChargeMetadata{
 			CustomerID:   "id_1005",
 			CustomerName: "Satoshi Nakamoto",

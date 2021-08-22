@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 	"github.com/kokizzu/gotro/L"
 	"github.com/stretchr/testify/assert"
 )
@@ -70,7 +71,7 @@ func TestClient_Charge_Integration(t *testing.T) {
 						Amount:   "100.00",
 						Currency: "USD",
 					},
-					PricingType: "fixed_price",
+					PricingType: enum.PricingTypeFixedPrice,
 					Metadata: entity.CreateChargeMetadata{
 						CustomerID:   "id_1005",
 						CustomerName: "Satoshi Nakamoto",

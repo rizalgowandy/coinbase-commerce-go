@@ -1,12 +1,16 @@
 package entity
 
+import (
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+)
+
 // Reference: https://commerce.coinbase.com/docs/api/#create-a-charge
 
 type CreateChargeReq struct {
 	Name        string               `json:"name"`
 	Description string               `json:"description"`
 	LocalPrice  CreateChargePrice    `json:"local_price"`
-	PricingType string               `json:"pricing_type"`
+	PricingType enum.PricingType     `json:"pricing_type"`
 	Metadata    CreateChargeMetadata `json:"metadata"`
 	RedirectURL string               `json:"redirect_url"`
 	CancelURL   string               `json:"cancel_url"`
