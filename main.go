@@ -14,6 +14,7 @@ type Config struct {
 	// Key is the authentication API key.
 	// Most requests to the Commerce API must be authenticated with an API key.
 	// You can create an API key in your Settings page after creating a Coinbase Commerce account.
+	// Reference: https://commerce.coinbase.com/docs/api/#authentication
 	Key string
 	// Timeout describes total waiting time before a request is treated as timeout.
 	// Default: 1 min.
@@ -63,12 +64,12 @@ func NewClient(cfg Config) (*Client, error) {
 		SetDebug(cfg.Debug)
 
 	return &Client{
-		Charges: api.NewCharges(r),
+		charges: api.NewCharges(r),
 	}, nil
 }
 
 type Client struct {
-	*api.Charges
+	charges *api.Charges
 }
 
 // CreateCharge charge a customer with certain amount of currency.
@@ -77,17 +78,34 @@ type Client struct {
 // Once a charge is created a customer must broadcast a payment
 // to the blockchain before the charge expires.
 // Reference: https://commerce.coinbase.com/docs/api/#create-a-charge
-func (c Client) CreateCharge(
-	ctx context.Context,
-	req *entity.CreateChargeReq,
-) (*entity.CreateChargeResp, error) {
+func (c Client) CreateCharge(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
+	if c.charges == nil {
+		return nil, errors.New("client: initialize first")
+	}
+
 	if req == nil {
 		return nil, errors.New("payload: missing")
 	}
 
-	if c.Charges == nil {
+	return c.charges.Create(ctx, req)
+}
+
+// ShowCharge retrieves the details of a charge that has been previously created.
+// Supply the unique charge code or id that was returned when the charge was created.
+// This information is also returned when a charge is first created.
+// Reference: https://commerce.coinbase.com/docs/api/#show-a-charge
+func (c Client) ShowCharge(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error) {
+	if c.charges == nil {
 		return nil, errors.New("client: initialize first")
 	}
 
-	return c.Charges.Create(ctx, req)
+	if req == nil {
+		return nil, errors.New("payload: missing")
+	}
+
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	return c.charges.Show(ctx, req)
 }

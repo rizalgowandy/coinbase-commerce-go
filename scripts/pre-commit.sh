@@ -22,18 +22,6 @@ if [ "$nonformatted" ]; then
   printf "\n"
 fi
 
-# Some files are not formatted with golines. Print message.
-nonformatted=$(golines -l $files)
-if [ "$nonformatted" ]; then
-  echo >&2 "Go files must be formatted with golines. Running:"
-  for fn in $nonformatted; do
-    echo >&2 "  golines -w $PWD/$fn"
-    golines -w "$PWD/$fn"
-    git add "$PWD/$fn"
-  done
-  printf "\n"
-fi
-
 # Run linter.
 make linter || exit 1
 
