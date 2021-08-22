@@ -53,11 +53,8 @@ func NewClient(cfg Config) (*Client, error) {
 	}
 
 	r := resty.New().
-		SetHostURL("https://api.commerce.coinbase.com").
-		SetHeaders(map[string]string{
-			"X-CC-Api-Key": cfg.Key,
-			"X-CC-Version": "2018-03-22",
-		}).
+		SetHostURL(api.HostURL).
+		SetHeaders(api.DefaultHeaders(cfg.Key)).
 		SetTimeout(cfg.Timeout).
 		SetRetryCount(cfg.RetryCount).
 		SetRetryMaxWaitTime(cfg.RetryMaxWaitTime).
@@ -122,4 +119,27 @@ func (c Client) ListCharges(ctx context.Context, req *entity.ListChargesReq) (*e
 	}
 
 	return c.charges.List(ctx, req)
+}
+
+// CancelCharge cancels a charge that has been previously created.
+// Supply the unique charge code or id that was returned when the charge was created.
+// This information is also returned when a charge is first created.
+// Note:
+// Only new charges can be successfully canceled.
+// Once payment is detected, charge can no longer be canceled.
+// Reference: https://commerce.coinbase.com/docs/api/#cancel-a-charge
+func (c Client) CancelCharge(ctx context.Context, req *entity.CancelChargeReq) (*entity.CancelChargeResp, error) {
+	if c.charges == nil {
+		return nil, errors.New("client: initialize first")
+	}
+
+	if req == nil {
+		return nil, errors.New("payload: missing")
+	}
+
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
+	return c.charges.Cancel(ctx, req)
 }

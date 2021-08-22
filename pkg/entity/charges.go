@@ -71,3 +71,30 @@ type ListChargesResp struct {
 	Pagination PaginationResp   `json:"pagination"`
 	Data       []ChargeResource `json:"data"`
 }
+
+// Reference: https://commerce.coinbase.com/docs/api/#cancel-a-charge
+
+type CancelChargeReq struct {
+	ChargeCode string `json:"charge_code"`
+	ChargeID   string `json:"charge_id"`
+}
+
+func (c CancelChargeReq) Validate() error {
+	if c.ChargeCode == "" && c.ChargeID == "" {
+		return errors.New("payload: at least one of [code, id] must be supplied")
+	}
+	return nil
+}
+
+// Identifier returns identifier for current request.
+// Charge code has higher priority than id.
+func (c CancelChargeReq) Identifier() string {
+	if c.ChargeCode != "" {
+		return c.ChargeCode
+	}
+	return c.ChargeID
+}
+
+type CancelChargeResp struct {
+	Data ChargeResource `json:"data"`
+}

@@ -305,3 +305,109 @@ func TestClient_ListCharges_Integration(t *testing.T) {
 		})
 	}
 }
+
+func TestClient_CancelCharge_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.CancelChargeReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Missing identifier",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.CancelChargeReq{
+					ChargeCode: "",
+					ChargeID:   "",
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Cancel using charge code",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.CancelChargeReq{
+					ChargeCode: func() string {
+						c := client
+						got, err := c.charges.Create(context.Background(), &entity.CreateChargeReq{
+							Name:        "The Sovereign Individual",
+							Description: "Mastering the Transition to the Information Age",
+							LocalPrice: entity.CreateChargePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							PricingType: enum.PricingTypeFixedPrice,
+							Metadata: entity.CreateChargeMetadata{
+								CustomerID:   "id_1005",
+								CustomerName: "Satoshi Nakamoto",
+							},
+							RedirectURL: "https://charge/completed/page",
+							CancelURL:   "https://charge/canceled/page",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.Code
+					}(),
+					ChargeID: "",
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Cancel using charge id",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.CancelChargeReq{
+					ChargeCode: "",
+					ChargeID: func() string {
+						c := client
+						got, err := c.charges.Create(context.Background(), &entity.CreateChargeReq{
+							Name:        "The Sovereign Individual",
+							Description: "Mastering the Transition to the Information Age",
+							LocalPrice: entity.CreateChargePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							PricingType: enum.PricingTypeFixedPrice,
+							Metadata: entity.CreateChargeMetadata{
+								CustomerID:   "id_1005",
+								CustomerName: "Satoshi Nakamoto",
+							},
+							RedirectURL: "https://charge/completed/page",
+							CancelURL:   "https://charge/canceled/page",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.CancelCharge(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("CancelCharge() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
