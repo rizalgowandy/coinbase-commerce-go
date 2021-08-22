@@ -42,7 +42,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	resp, err := client.CreateCharge(context.Background(), &entity.CreateChargeReq{
+	// Create a charge.
+	createResp, err := client.CreateCharge(context.Background(), &entity.CreateChargeReq{
 		Name:        "The Sovereign Individual",
 		Description: "Mastering the Transition to the Information Age",
 		LocalPrice: entity.CreateChargePrice{
@@ -60,48 +61,25 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Printf("%+v", createResp)
 
-	log.Printf("%+v", resp)
-}
-```
-
-## Charges
-
-### [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
-
-
-
-### [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
-
-```go
-package main
-
-import (
-	"context"
-	"log"
-	
-	"github.com/benalucorp/coinbase-commerce-go"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
-)
-
-func main() {
-	client, err := coinbase.NewClient(coinbase.Config{
-		Key: "REPLACE_WITH_YOUR_API_KEY",
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Provide either code or id.
-	resp, err := client.ShowCharge(context.Background(), &entity.ShowChargeReq{
-		ChargeCode: "3HDDCCV8",
+	// Show a charge by providing either the code or id.
+	showResp, err := client.ShowCharge(context.Background(), &entity.ShowChargeReq{
+		ChargeCode: createResp.Data.Code,
 		ChargeID:   "",
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	log.Printf("%+v", resp)
+	log.Printf("%+v", showResp)
 }
 ```
+
+For more example check [here](main_integration_test.go).
+
+## Supported API
+
+- Charges:
+   - Create a charge: https://commerce.coinbase.com/docs/api/#create-a-charge
+   - Show a charge: https://commerce.coinbase.com/docs/api/#show-a-charge
+   - List charges: https://commerce.coinbase.com/docs/api/#list-charges

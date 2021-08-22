@@ -109,3 +109,17 @@ func (c Client) ShowCharge(ctx context.Context, req *entity.ShowChargeReq) (*ent
 
 	return c.charges.Show(ctx, req)
 }
+
+// ListCharges lists all the charges.
+// Reference: https://commerce.coinbase.com/docs/api/#list-charges
+func (c Client) ListCharges(ctx context.Context, req *entity.ListChargesReq) (*entity.ListChargesResp, error) {
+	if c.charges == nil {
+		return nil, errors.New("client: initialize first")
+	}
+
+	if req == nil {
+		return nil, errors.New("payload: missing")
+	}
+
+	return c.charges.List(ctx, req)
+}
