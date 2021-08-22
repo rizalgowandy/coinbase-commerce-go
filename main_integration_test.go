@@ -163,6 +163,7 @@ func TestClient_Show_Integration(t *testing.T) {
 						}
 						return got.Data.Code
 					}(),
+					ChargeID: "",
 				},
 			},
 			wantErr: false,
@@ -172,7 +173,8 @@ func TestClient_Show_Integration(t *testing.T) {
 			args: args{
 				ctx: context.Background(),
 				req: &entity.ShowChargeReq{
-					ChargeCode: func() string {
+					ChargeCode: "",
+					ChargeID: func() string {
 						c := client
 						got, err := c.charges.Create(context.Background(), &entity.CreateChargeReq{
 							Name:        "The Sovereign Individual",

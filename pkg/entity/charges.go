@@ -43,7 +43,7 @@ type ShowChargeReq struct {
 
 func (s ShowChargeReq) Validate() error {
 	if s.ChargeCode == "" && s.ChargeID == "" {
-		return errors.New("payload: at least one of code id must be supplied")
+		return errors.New("payload: at least one of [code, id] must be supplied")
 	}
 	return nil
 }
