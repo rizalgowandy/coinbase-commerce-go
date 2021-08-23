@@ -2,9 +2,9 @@ package coinbase
 
 import (
 	"context"
-	"errors"
 
 	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api/stub"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 )
 
@@ -15,12 +15,15 @@ func NewClient(cfg api.Config) (*Client, error) {
 	}
 
 	return &Client{
-		charges: api.NewCharges(cfg),
+		charges:     api.NewCharges(cfg),
+		chargesStub: stub.NewCharges(),
 	}, nil
 }
 
+// Client is the main client to interact with Coinbase Commerce API.
 type Client struct {
-	charges *api.Charges
+	charges     api.ChargesItf
+	chargesStub api.ChargesItf
 }
 
 // CreateCharge charge a customer with certain amount of currency.
@@ -30,10 +33,9 @@ type Client struct {
 // to the blockchain before the charge expires.
 // Reference: https://commerce.coinbase.com/docs/api/#create-a-charge
 func (c Client) CreateCharge(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
-	if req == nil {
-		return nil, errors.New("payload: missing")
+	if stub.Ok(ctx) {
+		return c.chargesStub.Create(ctx, req)
 	}
-
 	return c.charges.Create(ctx, req)
 }
 
@@ -42,24 +44,21 @@ func (c Client) CreateCharge(ctx context.Context, req *entity.CreateChargeReq) (
 // This information is also returned when a charge is first created.
 // Reference: https://commerce.coinbase.com/docs/api/#show-a-charge
 func (c Client) ShowCharge(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error) {
-	if req == nil {
-		return nil, errors.New("payload: missing")
-	}
-
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
-
+	if stub.Ok(ctx) {
+		return c.chargesStub.Show(ctx, req)
+	}
 	return c.charges.Show(ctx, req)
 }
 
 // ListCharges lists all the charges.
 // Reference: https://commerce.coinbase.com/docs/api/#list-charges
 func (c Client) ListCharges(ctx context.Context, req *entity.ListChargesReq) (*entity.ListChargesResp, error) {
-	if req == nil {
-		return nil, errors.New("payload: missing")
+	if stub.Ok(ctx) {
+		return c.chargesStub.List(ctx, req)
 	}
-
 	return c.charges.List(ctx, req)
 }
 
@@ -73,14 +72,12 @@ func (c Client) ListCharges(ctx context.Context, req *entity.ListChargesReq) (*e
 //
 // Reference: https://commerce.coinbase.com/docs/api/#cancel-a-charge
 func (c Client) CancelCharge(ctx context.Context, req *entity.CancelChargeReq) (*entity.CancelChargeResp, error) {
-	if req == nil {
-		return nil, errors.New("payload: missing")
-	}
-
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
-
+	if stub.Ok(ctx) {
+		return c.chargesStub.Cancel(ctx, req)
+	}
 	return c.charges.Cancel(ctx, req)
 }
 
@@ -93,13 +90,11 @@ func (c Client) CancelCharge(ctx context.Context, req *entity.CancelChargeReq) (
 //
 // Reference: https://commerce.coinbase.com/docs/api/#resolve-a-charge
 func (c Client) ResolveCharge(ctx context.Context, req *entity.ResolveChargeReq) (*entity.ResolveChargeResp, error) {
-	if req == nil {
-		return nil, errors.New("payload: missing")
-	}
-
 	if err := req.Validate(); err != nil {
 		return nil, err
 	}
-
+	if stub.Ok(ctx) {
+		return c.chargesStub.Resolve(ctx, req)
+	}
 	return c.charges.Resolve(ctx, req)
 }

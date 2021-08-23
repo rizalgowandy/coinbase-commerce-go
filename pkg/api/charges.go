@@ -9,7 +9,7 @@ import (
 
 func NewCharges(cfg Config) *Charges {
 	return &Charges{
-		client: NewClient(cfg),
+		client: NewRestyClient(cfg),
 	}
 }
 

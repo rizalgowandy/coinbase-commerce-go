@@ -132,6 +132,9 @@ issues:
         - stylecheck
         - funlen
         - lll
+    - path: stub
+      linters:
+        - funlen
 
     # https://github.com/go-critic/go-critic/issues/926
     - linters:
