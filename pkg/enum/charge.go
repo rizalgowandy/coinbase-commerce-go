@@ -17,6 +17,7 @@ const (
 type ChargeUnresolvedContext string
 
 const (
+	ChargeUnresolvedContextNone      ChargeUnresolvedContext = ""
 	ChargeUnresolvedContextUnderpaid ChargeUnresolvedContext = "UNDERPAID"
 	ChargeUnresolvedContextOverpaid  ChargeUnresolvedContext = "OVERPAID"
 	ChargeUnresolvedContextDelayed   ChargeUnresolvedContext = "DELAYED"

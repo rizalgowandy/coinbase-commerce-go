@@ -27,12 +27,13 @@ import (
 	"log"
 
 	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
 func main() {
-	client, err := coinbase.NewClient(coinbase.Config{
+	client, err := coinbase.NewClient(api.Config{
 		Key:              "REPLACE_WITH_YOUR_API_KEY",
 		Timeout:          0,    // Default: 1 min.
 		RetryCount:       0,    // Default: 0 = disable.
@@ -77,6 +78,53 @@ func main() {
 ```
 
 For more example check [here](main_integration_test.go).
+
+## Test Double / Stub
+
+Sometime it's make sense to make an API call without actually calling the API. In order to support that this library has a built-in stub that can be triggered. You can enable stub by injecting certain value to the context data. You can also enforce that certain API call will always return error with specific type and
+message.
+
+```go
+package main
+
+import (
+	"context"
+	"log"
+
+	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api/stub"
+)
+
+func AlwaysSuccess(ctx context.Context, client *coinbase.Client) {
+	// Enable stub that always success and return data.
+	ctx = stub.Enable(ctx)
+
+	// Call any client method.
+	resp, err := client.CreateCharge(ctx, &entity.CreateChargeReq{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%+v", resp)
+}
+
+func AlwaysError(ctx context.Context, client *coinbase.Client) {
+	// Enable stub that always error and return specific error.
+	ctx = stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
+		Type:    "bad_request",
+		Message: "stub: error triggered",
+	})
+
+	// Call any client method.
+	resp, err := client.CreateCharge(ctx, &entity.CreateChargeReq{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%+v", resp)
+}
+```
 
 ## Supported API
 
