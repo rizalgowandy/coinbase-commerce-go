@@ -6,6 +6,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 	"github.com/kokizzu/gotro/L"
@@ -29,7 +30,7 @@ func TestMain(m *testing.M) {
 	}
 
 	var err error
-	client, err = NewClient(Config{
+	client, err = NewClient(api.Config{
 		Key:   os.Getenv("KEY"),
 		Debug: true,
 	})

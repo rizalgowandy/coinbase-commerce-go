@@ -27,12 +27,13 @@ import (
 	"log"
 
 	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
 func main() {
-	client, err := coinbase.NewClient(coinbase.Config{
+	client, err := coinbase.NewClient(api.Config{
 		Key:              "REPLACE_WITH_YOUR_API_KEY",
 		Timeout:          0,    // Default: 1 min.
 		RetryCount:       0,    // Default: 0 = disable.

@@ -7,9 +7,9 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-func NewCharges(client *resty.Client) *Charges {
+func NewCharges(cfg Config) *Charges {
 	return &Charges{
-		client: client,
+		client: NewClient(cfg),
 	}
 }
 
