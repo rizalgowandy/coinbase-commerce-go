@@ -130,8 +130,14 @@ func AlwaysError(ctx context.Context, client *coinbase.Client) {
 
 Version: 2018-03-22
 
-- Charges:
+- [Charges](https://commerce.coinbase.com/docs/api/#charges)
    - [Create a charge](https://commerce.coinbase.com/docs/api/#create-a-charge)
    - [Show a charge](https://commerce.coinbase.com/docs/api/#show-a-charge)
    - [List charges](https://commerce.coinbase.com/docs/api/#list-charges)
    - [Cancel a charge](https://commerce.coinbase.com/docs/api/#cancel-a-charge)
+- [Checkouts](https://commerce.coinbase.com/docs/api/#checkouts)
+   - [List checkouts](https://commerce.coinbase.com/docs/api/#list-checkouts)
+   - [Show a checkout](https://commerce.coinbase.com/docs/api/#show-a-checkout)
+   - [Create a checkout](https://commerce.coinbase.com/docs/api/#create-a-checkout)
+   - [Update a checkout](https://commerce.coinbase.com/docs/api/#update-a-checkout)
+   - [Delete a checkout](https://commerce.coinbase.com/docs/api/#delete-a-checkout)
