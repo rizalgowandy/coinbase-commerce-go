@@ -124,7 +124,23 @@ func AlwaysError(ctx context.Context, client *coinbase.Client) {
 	}
 	log.Printf("%+v", resp)
 }
+
+func SendWebhook(ctx context.Context, client *coinbase.Cliet) {
+	// Enable stub that will send webhook after certain times.
+	ctx := stub.SetWebhookReq(context.Background(), &entity.WebhookReq{
+		URL:             "http://127.0.0.1:9000/test",
+		SharedSecretKey: "WEBHOOK_SECRET_KEY",
+		Resource:        stub.CreateWebhooksResource(),
+	})
+	resp, err := client.CreateCharge(ctx, &entity.CreateChargeReq{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%+v", resp)
+}
 ```
+
+For more example, check [here](example/main.go).
 
 ## Supported API
 
@@ -149,3 +165,5 @@ Version: 2018-03-22
 - [Events](https://commerce.coinbase.com/docs/api/#events)
    - [Show an event](https://commerce.coinbase.com/docs/api/#show-a-event)
    - [List events](https://commerce.coinbase.com/docs/api/#list-events)
+- [Webhooks](https://commerce.coinbase.com/docs/api/#webhooks)
+  - [Securing webhooks](https://commerce.coinbase.com/docs/api/#securing-webhooks)

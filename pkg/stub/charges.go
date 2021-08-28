@@ -4,15 +4,20 @@ import (
 	"context"
 	"time"
 
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
 )
 
-func NewCharges() *Charges {
-	return &Charges{}
+func NewCharges(cfg api.Config) *Charges {
+	return &Charges{
+		webhooks: NewWebhooks(cfg),
+	}
 }
 
-type Charges struct{}
+type Charges struct {
+	webhooks *Webhooks
+}
 
 func (c *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error) {
 	if err := CreateErrResp(ctx); err.Valid() {
@@ -24,6 +29,15 @@ func (c *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*ent
 	data.Pricing.Local = req.LocalPrice
 	data.Description = req.Description
 	data.PricingType = req.PricingType
+
+	// Create webhook if requested.
+	webhookReq := GetWebhookReq(ctx)
+	if webhookReq != nil {
+		webhookReq.Resource.Event.Data = data
+		if err := c.webhooks.Register(ctx, webhookReq); err != nil {
+			return nil, err
+		}
+	}
 
 	return &entity.CreateChargeResp{
 		Data: data,

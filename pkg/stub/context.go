@@ -11,6 +11,7 @@ type contextKey string
 const (
 	CtxKeyStub              = contextKey("Coinbase-Commerce-Stub")
 	CtxKeyStubErrDetailResp = contextKey("Coinbase-Commerce-Stub-ErrDetailResp")
+	CtxKeyStubWebhookReq    = contextKey("Coinbase-Commerce-Stub-WebhookReq")
 )
 
 func Enable(ctx context.Context) context.Context {
@@ -46,6 +47,25 @@ func GetErrDetailResp(ctx context.Context) entity.ErrDetailResp {
 	res, ok := ctx.Value(CtxKeyStubErrDetailResp).(entity.ErrDetailResp)
 	if !ok {
 		return entity.ErrDetailResp{}
+	}
+	return res
+}
+
+func SetWebhookReq(ctx context.Context, req *entity.WebhookReq) context.Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	ctx = Enable(ctx)
+	return context.WithValue(ctx, CtxKeyStubWebhookReq, req)
+}
+
+func GetWebhookReq(ctx context.Context) *entity.WebhookReq {
+	if ctx == nil {
+		return nil
+	}
+	res, ok := ctx.Value(CtxKeyStubWebhookReq).(*entity.WebhookReq)
+	if !ok {
+		return nil
 	}
 	return res
 }

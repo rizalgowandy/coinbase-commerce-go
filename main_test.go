@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api/stub"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/stub"
 	"github.com/kokizzu/gotro/L"
 	"github.com/stretchr/testify/assert"
 )
@@ -30,7 +30,7 @@ func TestClient_CancelCharge(t *testing.T) {
 			name: "Stub error",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
@@ -48,7 +48,7 @@ func TestClient_CancelCharge(t *testing.T) {
 			name: "Stub success",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.Enable(context.Background()),
@@ -98,7 +98,7 @@ func TestClient_CreateCharge(t *testing.T) {
 			name: "Stub error",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
@@ -113,7 +113,7 @@ func TestClient_CreateCharge(t *testing.T) {
 			name: "Stub success",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.Enable(context.Background()),
@@ -160,7 +160,7 @@ func TestClient_ListCharges(t *testing.T) {
 			name: "Stub error",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
@@ -175,7 +175,7 @@ func TestClient_ListCharges(t *testing.T) {
 			name: "Stub success",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.Enable(context.Background()),
@@ -222,7 +222,7 @@ func TestClient_ResolveCharge(t *testing.T) {
 			name: "Stub error",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
@@ -240,7 +240,7 @@ func TestClient_ResolveCharge(t *testing.T) {
 			name: "Stub success",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.Enable(context.Background()),
@@ -290,7 +290,7 @@ func TestClient_ShowCharge(t *testing.T) {
 			name: "Stub error",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.SetErrDetailResp(context.Background(), entity.ErrDetailResp{
@@ -308,7 +308,7 @@ func TestClient_ShowCharge(t *testing.T) {
 			name: "Stub success",
 			fields: fields{
 				charges:     nil,
-				chargesStub: stub.NewCharges(),
+				chargesStub: stub.NewCharges(api.Config{}),
 			},
 			args: args{
 				ctx: stub.Enable(context.Background()),
