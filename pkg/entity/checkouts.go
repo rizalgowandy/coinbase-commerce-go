@@ -17,6 +17,29 @@ type ListCheckoutsResp struct {
 	Data       []CheckoutResource `json:"data"`
 }
 
+// Reference: https://commerce.coinbase.com/docs/api/#show-a-checkout
+
+type ShowCheckoutReq struct {
+	CheckoutID string `json:"checkout_id"`
+}
+
+func (s ShowCheckoutReq) Validate() error {
+	if s.CheckoutID == "" {
+		return errors.New("payload: at least one of [id] must be supplied")
+	}
+	return nil
+}
+
+// Identifier returns identifier for current request.
+// Checkout code has higher priority than id.
+func (s ShowCheckoutReq) Identifier() string {
+	return s.CheckoutID
+}
+
+type ShowCheckoutResp struct {
+	Data CheckoutResource `json:"data"`
+}
+
 // Reference: https://commerce.coinbase.com/docs/api/#create-a-checkout
 
 type CreateCheckoutReq struct {
