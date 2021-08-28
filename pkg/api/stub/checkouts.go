@@ -12,6 +12,19 @@ func NewCheckouts() *Checkouts {
 
 type Checkouts struct{}
 
+func (c *Checkouts) Show(ctx context.Context, req *entity.ShowCheckoutReq) (*entity.ShowCheckoutResp, error) {
+	if err := CreateErrResp(ctx); err.Valid() {
+		return nil, err.Error
+	}
+
+	data := CreateCheckoutResource()
+	data.ID = req.CheckoutID
+
+	return &entity.ShowCheckoutResp{
+		Data: data,
+	}, nil
+}
+
 func (c *Checkouts) Create(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error) {
 	if err := CreateErrResp(ctx); err.Valid() {
 		return nil, err.Error

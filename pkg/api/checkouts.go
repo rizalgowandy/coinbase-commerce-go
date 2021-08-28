@@ -42,6 +42,31 @@ func (c *Checkouts) List(ctx context.Context, req *entity.ListCheckoutsReq) (*en
 	return &content, nil
 }
 
+func (c *Checkouts) Show(ctx context.Context, req *entity.ShowCheckoutReq) (*entity.ShowCheckoutResp, error) {
+	url := "/checkouts/{identifier}"
+
+	var (
+		content    entity.ShowCheckoutResp
+		contentErr entity.ErrResp
+	)
+
+	_, err := c.client.R().
+		SetContext(ctx).
+		SetPathParam("identifier", req.Identifier()).
+		SetResult(&content).
+		SetError(&contentErr).
+		Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	if contentErr.Valid() {
+		return nil, contentErr.Error
+	}
+
+	return &content, nil
+}
+
 func (c *Checkouts) Create(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error) {
 	url := "/checkouts"
 

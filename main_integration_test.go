@@ -561,6 +561,76 @@ func TestClient_ListCheckouts_Integration(t *testing.T) {
 	}
 }
 
+func TestClient_ShowCheckout_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.ShowCheckoutReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Missing identifier",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ShowCheckoutReq{
+					CheckoutID: "",
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Show using checkout id",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ShowCheckoutReq{
+					CheckoutID: func() string {
+						c := client
+						got, err := c.checkouts.Create(context.Background(), &entity.CreateCheckoutReq{
+							Name:        "The Sovereign Individual",
+							Description: "Mastering the Transition to the Information Age",
+							LocalPrice: entity.CreateCheckoutPrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							PricingType: enum.PricingTypeFixedPrice,
+							RequestedInfo: []enum.CheckoutRequestedInfo{
+								enum.CheckoutRequestedInfoName,
+								enum.CheckoutRequestedInfoEmail,
+							},
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.ShowCheckout(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ShowCheckout() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
 func TestClient_CreateCheckout_Integration(t *testing.T) {
 	if !integration {
 		return

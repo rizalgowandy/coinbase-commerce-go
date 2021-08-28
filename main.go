@@ -112,6 +112,18 @@ func (c Client) ListCheckouts(ctx context.Context, req *entity.ListCheckoutsReq)
 	return c.checkouts.List(ctx, req)
 }
 
+// ShowCheckout show a single checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#show-a-checkout
+func (c Client) ShowCheckout(ctx context.Context, req *entity.ShowCheckoutReq) (*entity.ShowCheckoutResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	if stub.Ok(ctx) {
+		return c.checkoutsStub.Show(ctx, req)
+	}
+	return c.checkouts.Show(ctx, req)
+}
+
 // CreateCheckout create a new checkout.
 // Reference: https://commerce.coinbase.com/docs/api/#create-a-checkout
 func (c Client) CreateCheckout(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error) {

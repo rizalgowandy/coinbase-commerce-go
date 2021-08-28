@@ -27,6 +27,7 @@ type ChargesItf interface {
 
 type CheckoutsItf interface {
 	List(ctx context.Context, req *entity.ListCheckoutsReq) (*entity.ListCheckoutsResp, error)
+	Show(ctx context.Context, req *entity.ShowCheckoutReq) (*entity.ShowCheckoutResp, error)
 	Create(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error)
 	Update(ctx context.Context, req *entity.UpdateCheckoutReq) (*entity.UpdateCheckoutResp, error)
 	Delete(ctx context.Context, req *entity.DeleteCheckoutReq) (*entity.DeleteCheckoutResp, error)
