@@ -17,7 +17,7 @@ func CreateChargeResource() entity.ChargeResource {
 		Code:        "code-" + uuid,
 		Name:        "The Sovereign Individual",
 		Description: "Mastering the Transition to the Information Age",
-		LogoURL:     "",
+		LogoURL:     "https://res.cloudinary.com/commerce/image/upload/v1629866084/p6fysdmmql1wxgbmnjfw.png",
 		HostedURL:   "https://commerce.coinbase.com/charges/FLJ8D3PW",
 		CreatedAt:   time.Now(),
 		ExpiresAt:   time.Now().Add(24 * time.Hour),
