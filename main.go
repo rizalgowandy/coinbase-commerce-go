@@ -17,6 +17,7 @@ func NewClient(cfg api.Config) (*Client, error) {
 	return &Client{
 		charges:     api.NewCharges(cfg),
 		chargesStub: stub.NewCharges(),
+		checkouts:   api.NewCheckouts(cfg),
 	}, nil
 }
 
@@ -24,6 +25,7 @@ func NewClient(cfg api.Config) (*Client, error) {
 type Client struct {
 	charges     api.ChargesItf
 	chargesStub api.ChargesItf
+	checkouts   api.CheckoutsItf
 }
 
 // CreateCharge charge a customer with certain amount of currency.
@@ -97,4 +99,34 @@ func (c Client) ResolveCharge(ctx context.Context, req *entity.ResolveChargeReq)
 		return c.chargesStub.Resolve(ctx, req)
 	}
 	return c.charges.Resolve(ctx, req)
+}
+
+// ListCheckouts lists all the checkouts.
+// Reference: https://commerce.coinbase.com/docs/api/#list-checkouts
+func (c Client) ListCheckouts(ctx context.Context, req *entity.ListCheckoutsReq) (*entity.ListCheckoutsResp, error) {
+	return c.checkouts.List(ctx, req)
+}
+
+// CreateCheckout create a new checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#create-a-checkout
+func (c Client) CreateCheckout(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error) {
+	return c.checkouts.Create(ctx, req)
+}
+
+// UpdateCheckout update a checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#update-a-checkout
+func (c Client) UpdateCheckout(ctx context.Context, req *entity.UpdateCheckoutReq) (*entity.UpdateCheckoutResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	return c.checkouts.Update(ctx, req)
+}
+
+// DeleteCheckout delete a checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#delete-a-checkout
+func (c Client) DeleteCheckout(ctx context.Context, req *entity.DeleteCheckoutReq) (*entity.DeleteCheckoutResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	return c.checkouts.Delete(ctx, req)
 }
