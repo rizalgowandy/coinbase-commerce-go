@@ -21,6 +21,8 @@ func NewClient(cfg api.Config) (*Client, error) {
 		checkoutsStub: stub.NewCheckouts(),
 		invoices:      api.NewInvoices(cfg),
 		invoicesStub:  stub.NewInvoices(),
+		events:        api.NewEvents(cfg),
+		eventsStub:    stub.NewEvents(),
 	}, nil
 }
 
@@ -32,6 +34,8 @@ type Client struct {
 	checkoutsStub api.CheckoutsItf
 	invoices      api.InvoicesItf
 	invoicesStub  api.InvoicesItf
+	events        api.EventsItf
+	eventsStub    api.EventsItf
 }
 
 // CreateCharge charge a customer with certain amount of currency.
@@ -230,4 +234,26 @@ func (c *Client) ResolveInvoice(ctx context.Context, req *entity.ResolveInvoiceR
 		return c.invoicesStub.Resolve(ctx, req)
 	}
 	return c.invoices.Resolve(ctx, req)
+}
+
+// ListEvents lists all the events.
+// Reference: https://commerce.coinbase.com/docs/api/#list-events
+func (c *Client) ListEvents(ctx context.Context, req *entity.ListEventsReq) (*entity.ListEventsResp, error) {
+	if stub.Ok(ctx) {
+		return c.eventsStub.List(ctx, req)
+	}
+	return c.events.List(ctx, req)
+}
+
+// ShowEvent retrieves the details of an event.
+// Supply the unique identifier of the event, which you might have received in a webhook.
+// Reference: https://commerce.coinbase.com/docs/api/#show-an-event
+func (c *Client) ShowEvent(ctx context.Context, req *entity.ShowEventReq) (*entity.ShowEventResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	if stub.Ok(ctx) {
+		return c.eventsStub.Show(ctx, req)
+	}
+	return c.events.Show(ctx, req)
 }

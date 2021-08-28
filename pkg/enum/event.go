@@ -1,23 +1,23 @@
 package enum
 
-type Event string
+type EventType string
 
 const (
-	// EventChargeCreated means a new charge is created.
-	EventChargeCreated Event = "charge:created"
+	// EventTypeChargeCreated means a new charge is created.
+	EventTypeChargeCreated EventType = "charge:created"
 
-	// EventChargeConfirmed	means charge has been confirmed and the associated payment is completed.
-	EventChargeConfirmed Event = "charge:confirmed"
+	// EventTypeChargeConfirmed	means charge has been confirmed and the associated payment is completed.
+	EventTypeChargeConfirmed EventType = "charge:confirmed"
 
-	// EventChargeFailed means failed to complete.
-	EventChargeFailed Event = "charge:failed"
+	// EventTypeChargeFailed means failed to complete.
+	EventTypeChargeFailed EventType = "charge:failed"
 
-	// EventChargeDelayed means received a payment after it had been expired.
-	EventChargeDelayed Event = "charge:delayed"
+	// EventTypeChargeDelayed means received a payment after it had been expired.
+	EventTypeChargeDelayed EventType = "charge:delayed"
 
-	// EventChargePending means charge has been detected but has not been confirmed yet.
-	EventChargePending Event = "charge:pending"
+	// EventTypeChargePending means charge has been detected but has not been confirmed yet.
+	EventTypeChargePending EventType = "charge:pending"
 
-	// EventChargeResolved means charge has been resolved.
-	EventChargeResolved Event = "charge:resolved"
+	// EventTypeChargeResolved means charge has been resolved.
+	EventTypeChargeResolved EventType = "charge:resolved"
 )

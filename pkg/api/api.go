@@ -6,6 +6,8 @@ import (
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
 )
 
+const Version = "2018-03-22"
+
 type ChargesItf interface {
 	Create(ctx context.Context, req *entity.CreateChargeReq) (*entity.CreateChargeResp, error)
 	Show(ctx context.Context, req *entity.ShowChargeReq) (*entity.ShowChargeResp, error)
@@ -28,4 +30,9 @@ type InvoicesItf interface {
 	Create(ctx context.Context, req *entity.CreateInvoiceReq) (*entity.CreateInvoiceResp, error)
 	Void(ctx context.Context, req *entity.VoidInvoiceReq) (*entity.VoidInvoiceResp, error)
 	Resolve(ctx context.Context, req *entity.ResolveInvoiceReq) (*entity.ResolveInvoiceResp, error)
+}
+
+type EventsItf interface {
+	List(ctx context.Context, req *entity.ListEventsReq) (*entity.ListEventsResp, error)
+	Show(ctx context.Context, req *entity.ShowEventReq) (*entity.ShowEventResp, error)
 }
