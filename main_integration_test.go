@@ -518,3 +518,224 @@ func TestClient_ResolveCharge_Integration(t *testing.T) {
 		})
 	}
 }
+
+func TestClient_ListCheckouts_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+	type args struct {
+		ctx context.Context
+		req *entity.ListCheckoutsReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ListCheckoutsReq{
+					PaginationReq: entity.PaginationReq{
+						Limit: 5,
+					},
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.ListCheckouts(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ListCheckouts() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_CreateCheckout_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+	type args struct {
+		ctx context.Context
+		req *entity.CreateCheckoutReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.CreateCheckoutReq{
+					Name:        "The Sovereign Individual",
+					Description: "Mastering the Transition to the Information Age",
+					LocalPrice: entity.CreateCheckoutPrice{
+						Amount:   "100.00",
+						Currency: "USD",
+					},
+					PricingType: enum.PricingTypeFixedPrice,
+					RequestedInfo: []enum.CheckoutRequestedInfo{
+						enum.CheckoutRequestedInfoName,
+						enum.CheckoutRequestedInfoEmail,
+					},
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.CreateCheckout(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("CreateCheckout() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_UpdateCheckout_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+	type args struct {
+		ctx context.Context
+		req *entity.UpdateCheckoutReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.UpdateCheckoutReq{
+					CheckoutID: func() string {
+						c := client
+						got, err := c.checkouts.Create(context.Background(), &entity.CreateCheckoutReq{
+							Name:        "The Sovereign Individual",
+							Description: "Mastering the Transition to the Information Age",
+							LocalPrice: entity.CreateCheckoutPrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							PricingType: enum.PricingTypeFixedPrice,
+							RequestedInfo: []enum.CheckoutRequestedInfo{
+								enum.CheckoutRequestedInfoName,
+								enum.CheckoutRequestedInfoEmail,
+							},
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+					Name:        "The Sovereign Individual v2",
+					Description: "Mastering the Transition to the Information Age v2",
+					LocalPrice: entity.UpdateCheckoutPrice{
+						Amount:   "200.00",
+						Currency: "USD",
+					},
+					PricingType: enum.PricingTypeFixedPrice,
+					RequestedInfo: []enum.CheckoutRequestedInfo{
+						enum.CheckoutRequestedInfoName,
+						enum.CheckoutRequestedInfoEmail,
+					},
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.UpdateCheckout(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("UpdateCheckout() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_DeleteCheckout_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+	type args struct {
+		ctx context.Context
+		req *entity.DeleteCheckoutReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.DeleteCheckoutReq{
+					CheckoutID: func() string {
+						c := client
+						got, err := c.checkouts.Create(context.Background(), &entity.CreateCheckoutReq{
+							Name:        "The Sovereign Individual",
+							Description: "Mastering the Transition to the Information Age",
+							LocalPrice: entity.CreateCheckoutPrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							PricingType: enum.PricingTypeFixedPrice,
+							RequestedInfo: []enum.CheckoutRequestedInfo{
+								enum.CheckoutRequestedInfoName,
+								enum.CheckoutRequestedInfoEmail,
+							},
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.DeleteCheckout(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("DeleteCheckout() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}

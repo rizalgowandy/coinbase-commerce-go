@@ -15,15 +15,19 @@ func NewClient(cfg api.Config) (*Client, error) {
 	}
 
 	return &Client{
-		charges:     api.NewCharges(cfg),
-		chargesStub: stub.NewCharges(),
+		charges:       api.NewCharges(cfg),
+		chargesStub:   stub.NewCharges(),
+		checkouts:     api.NewCheckouts(cfg),
+		checkoutsStub: stub.NewCheckouts(),
 	}, nil
 }
 
 // Client is the main client to interact with Coinbase Commerce API.
 type Client struct {
-	charges     api.ChargesItf
-	chargesStub api.ChargesItf
+	charges       api.ChargesItf
+	chargesStub   api.ChargesItf
+	checkouts     api.CheckoutsItf
+	checkoutsStub api.CheckoutsItf
 }
 
 // CreateCharge charge a customer with certain amount of currency.
@@ -97,4 +101,46 @@ func (c Client) ResolveCharge(ctx context.Context, req *entity.ResolveChargeReq)
 		return c.chargesStub.Resolve(ctx, req)
 	}
 	return c.charges.Resolve(ctx, req)
+}
+
+// ListCheckouts lists all the checkouts.
+// Reference: https://commerce.coinbase.com/docs/api/#list-checkouts
+func (c Client) ListCheckouts(ctx context.Context, req *entity.ListCheckoutsReq) (*entity.ListCheckoutsResp, error) {
+	if stub.Ok(ctx) {
+		return c.checkoutsStub.List(ctx, req)
+	}
+	return c.checkouts.List(ctx, req)
+}
+
+// CreateCheckout create a new checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#create-a-checkout
+func (c Client) CreateCheckout(ctx context.Context, req *entity.CreateCheckoutReq) (*entity.CreateCheckoutResp, error) {
+	if stub.Ok(ctx) {
+		return c.checkoutsStub.Create(ctx, req)
+	}
+	return c.checkouts.Create(ctx, req)
+}
+
+// UpdateCheckout update a checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#update-a-checkout
+func (c Client) UpdateCheckout(ctx context.Context, req *entity.UpdateCheckoutReq) (*entity.UpdateCheckoutResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	if stub.Ok(ctx) {
+		return c.checkoutsStub.Update(ctx, req)
+	}
+	return c.checkouts.Update(ctx, req)
+}
+
+// DeleteCheckout delete a checkout.
+// Reference: https://commerce.coinbase.com/docs/api/#delete-a-checkout
+func (c Client) DeleteCheckout(ctx context.Context, req *entity.DeleteCheckoutReq) (*entity.DeleteCheckoutResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+	if stub.Ok(ctx) {
+		return c.checkoutsStub.Delete(ctx, req)
+	}
+	return c.checkouts.Delete(ctx, req)
 }

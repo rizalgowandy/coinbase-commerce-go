@@ -13,11 +13,11 @@ func CreateChargeResource() entity.ChargeResource {
 
 	return entity.ChargeResource{
 		ID:          "id-" + uuid,
-		Resource:    "charge",
+		Resource:    enum.ResourceCharge,
 		Code:        "code-" + uuid,
 		Name:        "The Sovereign Individual",
 		Description: "Mastering the Transition to the Information Age",
-		LogoURL:     "",
+		LogoURL:     "https://res.cloudinary.com/commerce/image/upload/v1629866084/p6fysdmmql1wxgbmnjfw.png",
 		HostedURL:   "https://commerce.coinbase.com/charges/FLJ8D3PW",
 		CreatedAt:   time.Now(),
 		ExpiresAt:   time.Now().Add(24 * time.Hour),
@@ -170,13 +170,13 @@ func CreateChargeResource() entity.ChargeResource {
 			USDC        string `json:"usdc"`
 			Dai         string `json:"dai"`
 		}{
-			Bitcoin:     "37rYMGNsMt9CsvrYHtCjKyYrsYFQAmhHa6",
-			BitcoinCash: "",
-			Ethereum:    "0x02fdf03cfbf240d1b8b4dfefab53487e80118534",
-			Litecoin:    "MH5zC7Sya7vsDDMHvFayWXpj4hk7xAD4oi",
-			Dogecoin:    "DBypiqkR67YjWzzGF8nVstk1PtwMbP5NeS",
-			USDC:        "0x02fdf03cfbf240d1b8b4dfefab53487e80118534",
-			Dai:         "0x02fdf03cfbf240d1b8b4dfefab53487e80118534",
+			Bitcoin:     "BitcoinAddress",
+			BitcoinCash: "BitcoinCashAddress",
+			Ethereum:    "EthereumAddress",
+			Litecoin:    "LitecoinAddress",
+			Dogecoin:    "DogecoinAddress",
+			USDC:        "USDCAddress",
+			Dai:         "DaiAddress",
 		},
 	}
 }
