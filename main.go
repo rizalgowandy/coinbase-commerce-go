@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api/stub"
 	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/stub"
 )
 
 // NewClient creates a client to interact with Coinbase Commerce API.
@@ -16,7 +16,7 @@ func NewClient(cfg api.Config) (*Client, error) {
 
 	return &Client{
 		charges:       api.NewCharges(cfg),
-		chargesStub:   stub.NewCharges(),
+		chargesStub:   stub.NewCharges(cfg),
 		checkouts:     api.NewCheckouts(cfg),
 		checkoutsStub: stub.NewCheckouts(),
 		invoices:      api.NewInvoices(cfg),
@@ -256,4 +256,17 @@ func (c *Client) ShowEvent(ctx context.Context, req *entity.ShowEventReq) (*enti
 		return c.eventsStub.Show(ctx, req)
 	}
 	return c.events.Show(ctx, req)
+}
+
+// CompareWebhookSignature used for the handler middleware to verify webhook.
+// Mismatch signature will return an error.
+//
+// Payload:
+// req 					=> from request body.
+// receivedSignature	=> from "X-CC-Webhook-Signature" header.
+// sharedSecretKey		=> from webhook setting page secret key.
+//
+// Reference: https://commerce.coinbase.com/docs/api/#securing-webhooks
+func CompareWebhookSignature(ctx context.Context, req *entity.WebhookResource, receivedSignature, sharedSecretKey string) error {
+	return api.CompareWebhookSignature(ctx, req, receivedSignature, sharedSecretKey)
 }

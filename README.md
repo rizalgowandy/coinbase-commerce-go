@@ -126,6 +126,43 @@ func AlwaysError(ctx context.Context, client *coinbase.Client) {
 }
 ```
 
+For more example, check [here](main_test.go).
+
+### Webhook
+
+Webhooks make it easier to integrate with Coinbase Commerce by allowing you to subscribe to a set of charge events. In a sense webhook is basically callback to notify our app after a change of state in resource such as charges. Just like before, you can enable that by injecting certain value to the context.
+
+```go
+package main
+
+import (
+	"context"
+	"log"
+
+	"github.com/benalucorp/coinbase-commerce-go"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/benalucorp/coinbase-commerce-go/pkg/api/stub"
+)
+
+func SendWebhook(ctx context.Context, client *coinbase.Cliet) {
+	// Enable stub that will send webhook after certain times.
+	ctx := stub.SetWebhookReq(context.Background(), &entity.WebhookReq{
+		URL:             "http://127.0.0.1:9000/test",
+		SharedSecretKey: "WEBHOOK_SECRET_KEY",
+		Resource:        stub.CreateWebhooksResource(),
+	})
+	resp, err := client.CreateCharge(ctx, &entity.CreateChargeReq{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("%+v", resp)
+}
+```
+
+For more example, check [here](example/main.go).
+
 ## Supported API
 
 Version: 2018-03-22
@@ -149,3 +186,5 @@ Version: 2018-03-22
 - [Events](https://commerce.coinbase.com/docs/api/#events)
    - [Show an event](https://commerce.coinbase.com/docs/api/#show-a-event)
    - [List events](https://commerce.coinbase.com/docs/api/#list-events)
+- [Webhooks](https://commerce.coinbase.com/docs/api/#webhooks)
+   - [Securing webhooks](https://commerce.coinbase.com/docs/api/#securing-webhooks)
