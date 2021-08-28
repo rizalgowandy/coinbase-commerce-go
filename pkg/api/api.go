@@ -29,3 +29,8 @@ type InvoicesItf interface {
 	Void(ctx context.Context, req *entity.VoidInvoiceReq) (*entity.VoidInvoiceResp, error)
 	Resolve(ctx context.Context, req *entity.ResolveInvoiceReq) (*entity.ResolveInvoiceResp, error)
 }
+
+type EventsItf interface {
+	List(ctx context.Context, req *entity.ListEventsReq) (*entity.ListEventsResp, error)
+	Show(ctx context.Context, req *entity.ShowEventReq) (*entity.ShowEventResp, error)
+}

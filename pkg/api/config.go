@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+const Version = "2018-03-22"
+
 // Config is the necessary configuration to call API.
 type Config struct {
 	// Key is the authentication API key.

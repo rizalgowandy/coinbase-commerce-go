@@ -146,3 +146,6 @@ Version: 2018-03-22
    - [Show an invoice](https://commerce.coinbase.com/docs/api/#show-a-invoice)
    - [List invoices](https://commerce.coinbase.com/docs/api/#list-invoices)
    - [Cancel an invoice](https://commerce.coinbase.com/docs/api/#cancel-an-invoice)
+- [Events](https://commerce.coinbase.com/docs/api/#events)
+   - [Show an event](https://commerce.coinbase.com/docs/api/#show-a-event)
+   - [List events](https://commerce.coinbase.com/docs/api/#list-events)
