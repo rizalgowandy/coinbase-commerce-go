@@ -141,3 +141,8 @@ Version: 2018-03-22
    - [Create a checkout](https://commerce.coinbase.com/docs/api/#create-a-checkout)
    - [Update a checkout](https://commerce.coinbase.com/docs/api/#update-a-checkout)
    - [Delete a checkout](https://commerce.coinbase.com/docs/api/#delete-a-checkout)
+- [Invoices](https://commerce.coinbase.com/docs/api/#invoices)
+   - [Create an invoice](https://commerce.coinbase.com/docs/api/#create-an-invoice)
+   - [Show an invoice](https://commerce.coinbase.com/docs/api/#show-a-invoice)
+   - [List invoices](https://commerce.coinbase.com/docs/api/#list-invoices)
+   - [Cancel an invoice](https://commerce.coinbase.com/docs/api/#cancel-an-invoice)

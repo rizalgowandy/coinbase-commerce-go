@@ -809,3 +809,408 @@ func TestClient_DeleteCheckout_Integration(t *testing.T) {
 		})
 	}
 }
+
+func TestClient_CreateInvoice_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.CreateInvoiceReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.CreateInvoiceReq{
+					BusinessName:  "Crypto Accounting LLC",
+					CustomerEmail: "customer@test.com",
+					CustomerName:  "Test Customer",
+					LocalPrice: entity.CreateInvoicePrice{
+						Amount:   "100.00",
+						Currency: "USD",
+					},
+					Memo: "Taxes and Accounting Services",
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.CreateInvoice(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("CreateInvoice() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_ShowInvoice_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.ShowInvoiceReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Show using invoice code",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ShowInvoiceReq{
+					InvoiceCode: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.Code
+					}(),
+					InvoiceID: "",
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Show using invoice id",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ShowInvoiceReq{
+					InvoiceCode: "",
+					InvoiceID: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.ShowInvoice(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ShowInvoice() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_ListInvoices_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.ListInvoicesReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Next page",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ListInvoicesReq{
+					PaginationReq: func() entity.PaginationReq {
+						c := client
+						got, err := c.ListInvoices(context.Background(), &entity.ListInvoicesReq{
+							PaginationReq: entity.PaginationReq{
+								Limit: 2,
+							},
+						})
+						if err != nil {
+							return entity.PaginationReq{}
+						}
+						return got.Pagination.NextPaginationReq()
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Prev page",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ListInvoicesReq{
+					PaginationReq: func() entity.PaginationReq {
+						c := client
+						got, err := c.ListInvoices(context.Background(), &entity.ListInvoicesReq{
+							PaginationReq: entity.PaginationReq{
+								Limit: 2,
+							},
+						})
+						if err != nil {
+							return entity.PaginationReq{}
+						}
+						got, err = c.ListInvoices(context.Background(), &entity.ListInvoicesReq{
+							PaginationReq: got.Pagination.NextPaginationReq(),
+						})
+						if err != nil {
+							return entity.PaginationReq{}
+						}
+						return got.Pagination.PrevPaginationReq()
+					}(),
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "Success",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ListInvoicesReq{
+					PaginationReq: entity.PaginationReq{
+						Limit: 5,
+					},
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.ListInvoices(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ListInvoices() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_VoidInvoice_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.VoidInvoiceReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Void using invoice code",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.VoidInvoiceReq{
+					InvoiceCode: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.Code
+					}(),
+					InvoiceID: "",
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Void using invoice id",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.VoidInvoiceReq{
+					InvoiceCode: "",
+					InvoiceID: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.VoidInvoice(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("VoidInvoice() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}
+
+func TestClient_ResolveInvoice_Integration(t *testing.T) {
+	if !integration {
+		return
+	}
+
+	type args struct {
+		ctx context.Context
+		req *entity.ResolveInvoiceReq
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "Missing identifier",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ResolveInvoiceReq{
+					InvoiceCode: "",
+					InvoiceID:   "",
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Resolve using invoice code",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ResolveInvoiceReq{
+					InvoiceCode: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.Code
+					}(),
+					InvoiceID: "",
+				},
+			},
+			wantErr: true,
+		},
+		{
+			name: "Resolve using invoice id",
+			args: args{
+				ctx: context.Background(),
+				req: &entity.ResolveInvoiceReq{
+					InvoiceCode: "",
+					InvoiceID: func() string {
+						c := client
+						got, err := c.invoices.Create(context.Background(), &entity.CreateInvoiceReq{
+							BusinessName:  "Crypto Accounting LLC",
+							CustomerEmail: "customer@test.com",
+							CustomerName:  "Test Customer",
+							LocalPrice: entity.CreateInvoicePrice{
+								Amount:   "100.00",
+								Currency: "USD",
+							},
+							Memo: "Taxes and Accounting Services",
+						})
+						if err != nil {
+							return ""
+						}
+						return got.Data.ID
+					}(),
+				},
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := client
+			got, err := c.ResolveInvoice(tt.args.ctx, tt.args.req)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ResolveInvoice() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			L.Describe(got, err)
+			if !tt.wantErr {
+				assert.NotNil(t, got)
+			}
+		})
+	}
+}

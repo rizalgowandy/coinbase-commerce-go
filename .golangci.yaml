@@ -135,6 +135,9 @@ issues:
     - path: stub
       linters:
         - funlen
+    - path: api
+      linters:
+        - dupl
 
     # https://github.com/go-critic/go-critic/issues/926
     - linters:

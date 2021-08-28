@@ -10,7 +10,7 @@ func CreateCheckoutResource() entity.CheckoutResource {
 	uuid := ksuid.New().String()
 
 	return entity.CheckoutResource{
-		ID:          "id-" + uuid,
+		ID:          "stub_id-" + uuid,
 		Resource:    enum.ResourceCheckout,
 		Name:        "The Sovereign Individual",
 		Description: "Mastering the Transition to the Information Age",

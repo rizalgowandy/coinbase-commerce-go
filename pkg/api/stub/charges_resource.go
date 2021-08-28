@@ -12,16 +12,16 @@ func CreateChargeResource() entity.ChargeResource {
 	uuid := ksuid.New().String()
 
 	return entity.ChargeResource{
-		ID:          "id-" + uuid,
+		ID:          "stub_id-" + uuid,
 		Resource:    enum.ResourceCharge,
-		Code:        "code-" + uuid,
+		Code:        "stub_code-" + uuid,
 		Name:        "The Sovereign Individual",
 		Description: "Mastering the Transition to the Information Age",
 		LogoURL:     "https://res.cloudinary.com/commerce/image/upload/v1629866084/p6fysdmmql1wxgbmnjfw.png",
-		HostedURL:   "https://commerce.coinbase.com/charges/FLJ8D3PW",
+		HostedURL:   "https://commerce.coinbase.com/charges/YKDXC4HE",
 		CreatedAt:   time.Now(),
 		ExpiresAt:   time.Now().Add(24 * time.Hour),
-		ConfirmedAt: time.Time{},
+		ConfirmedAt: time.Now().Add(10 * time.Minute),
 		Checkout: struct {
 			ID string `json:"id"`
 		}{},
