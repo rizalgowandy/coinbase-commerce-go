@@ -6,9 +6,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 	"github.com/kokizzu/gotro/L"
 	"github.com/stretchr/testify/assert"
 )

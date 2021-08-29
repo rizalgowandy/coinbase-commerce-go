@@ -3,7 +3,7 @@ package entity
 import (
 	"time"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 )
 
 type EventResource struct {

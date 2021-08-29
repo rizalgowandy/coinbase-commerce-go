@@ -3,9 +3,9 @@ package stub
 import (
 	"time"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 	"github.com/segmentio/ksuid"
 )
 

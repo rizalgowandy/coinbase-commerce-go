@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 )
 
 const Version = "2018-03-22"

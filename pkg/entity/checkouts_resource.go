@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 )
 
 // Reference: https://commerce.coinbase.com/docs/api/#checkout-resource

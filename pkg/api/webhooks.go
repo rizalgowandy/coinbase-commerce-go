@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 )
 
 func CreateWebhookSignature(_ context.Context, req *entity.WebhookResource, sharedSecretKey string) (string, error) {

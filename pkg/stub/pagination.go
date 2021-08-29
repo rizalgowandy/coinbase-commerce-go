@@ -1,7 +1,7 @@
 package stub
 
 import (
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 )
 
 func CreatePagination() entity.PaginationResp {

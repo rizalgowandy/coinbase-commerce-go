@@ -3,7 +3,7 @@ package entity
 import (
 	"errors"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 )
 
 // Reference: https://commerce.coinbase.com/docs/api/#list-checkouts

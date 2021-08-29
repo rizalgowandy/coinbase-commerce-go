@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/stub"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/stub"
 	"github.com/kokizzu/gotro/L"
 	"github.com/stretchr/testify/assert"
 )

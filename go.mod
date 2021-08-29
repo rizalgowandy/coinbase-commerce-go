@@ -1,4 +1,4 @@
-module github.com/benalucorp/coinbase-commerce-go
+module github.com/rizalgowandy/coinbase-commerce-go
 
 go 1.14
 

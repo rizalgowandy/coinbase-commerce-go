@@ -1,8 +1,8 @@
 package stub
 
 import (
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/enum"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 	"github.com/segmentio/ksuid"
 )
 

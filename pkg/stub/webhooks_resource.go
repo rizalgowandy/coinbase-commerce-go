@@ -3,7 +3,7 @@ package stub
 import (
 	"time"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 	"github.com/segmentio/ksuid"
 )
 

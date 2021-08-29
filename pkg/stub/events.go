@@ -3,7 +3,7 @@ package stub
 import (
 	"context"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 )
 
 func NewEvents() *Events {

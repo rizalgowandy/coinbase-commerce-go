@@ -3,9 +3,9 @@ package coinbase
 import (
 	"context"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/stub"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/stub"
 )
 
 // NewClient creates a client to interact with Coinbase Commerce API.

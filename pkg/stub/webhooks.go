@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/benalucorp/coinbase-commerce-go/pkg/api"
-	"github.com/benalucorp/coinbase-commerce-go/pkg/entity"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 	"github.com/go-resty/resty/v2"
 	"github.com/kokizzu/gotro/L"
 	"github.com/robfig/cron/v3"
