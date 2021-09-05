@@ -6,12 +6,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/kokizzu/gotro/L"
 	"github.com/rizalgowandy/coinbase-commerce-go"
 	"github.com/rizalgowandy/coinbase-commerce-go/pkg/api"
 	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 	"github.com/rizalgowandy/coinbase-commerce-go/pkg/enum"
 	"github.com/rizalgowandy/coinbase-commerce-go/pkg/stub"
-	"github.com/kokizzu/gotro/L"
 )
 
 func main() {

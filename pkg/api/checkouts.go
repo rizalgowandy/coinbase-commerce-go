@@ -3,8 +3,8 @@ package api
 import (
 	"context"
 
-	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 	"github.com/go-resty/resty/v2"
+	"github.com/rizalgowandy/coinbase-commerce-go/pkg/entity"
 )
 
 func NewCheckouts(cfg Config) *Checkouts {

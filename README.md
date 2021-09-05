@@ -4,7 +4,7 @@
 [![Build Status](https://github.com/rizalgowandy/coinbase-commerce-go/workflows/Go/badge.svg?branch=main)](https://github.com/rizalgowandy/coinbase-commerce-go/actions?query=branch%3Amain)
 [![Sourcegraph](https://sourcegraph.com/github.com/rizalgowandy/coinbase-commerce-go/-/badge.svg)](https://sourcegraph.com/github.com/rizalgowandy/coinbase-commerce-go?badge)
 
-![gdk](https://socialify.git.ci/rizalgowandy/coinbase-commerce-go/image?description=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F1885080%3Fs%3D280%26v%3D4%26&pattern=Floating%20Cogs&theme=Light)
+![logo](https://socialify.git.ci/rizalgowandy/coinbase-commerce-go/image?description=1&logo=https%3A%2F%2Favatars.githubusercontent.com%2Fu%2F1885080%3Fs%3D280%26v%3D4%26&pattern=Floating%20Cogs&theme=Light)
 
 ## Getting Started
 
