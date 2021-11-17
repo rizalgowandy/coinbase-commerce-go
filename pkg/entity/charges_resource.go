@@ -27,8 +27,8 @@ type ChargeResource struct {
 		Status  enum.ChargeStatus            `json:"status"`
 		Context enum.ChargeUnresolvedContext `json:"context,omitempty"`
 	} `json:"timeline"`
-	Metadata    struct{}         `json:"metadata"`
-	PricingType enum.PricingType `json:"pricing_type"`
+	Metadata    map[string]string `json:"metadata"`
+	PricingType enum.PricingType  `json:"pricing_type"`
 	Pricing     struct {
 		Local struct {
 			Amount   string `json:"amount"`

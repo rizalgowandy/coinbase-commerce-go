@@ -36,7 +36,7 @@ func CreateChargeResource() entity.ChargeResource {
 				Context: enum.ChargeUnresolvedContextNone,
 			},
 		},
-		Metadata:    struct{}{},
+		Metadata:    map[string]string{},
 		PricingType: enum.PricingTypeFixedPrice,
 		Pricing: struct {
 			Local struct {

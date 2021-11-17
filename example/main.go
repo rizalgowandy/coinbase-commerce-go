@@ -37,9 +37,9 @@ func main() {
 			Currency: "USD",
 		},
 		PricingType: enum.PricingTypeFixedPrice,
-		Metadata: entity.CreateChargeMetadata{
-			CustomerID:   "id_1005",
-			CustomerName: "Satoshi Nakamoto",
+		Metadata: map[string]string{
+			"CustomerID":   "id_1005",
+			"CustomerName": "Satoshi Nakamoto",
 		},
 		RedirectURL: "https://charge/completed/page",
 		CancelURL:   "https://charge/canceled/page",
