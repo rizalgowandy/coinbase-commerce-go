@@ -29,6 +29,7 @@ func (c *Charges) Create(ctx context.Context, req *entity.CreateChargeReq) (*ent
 	data.Pricing.Local = req.LocalPrice
 	data.Description = req.Description
 	data.PricingType = req.PricingType
+	data.Metadata = req.Metadata
 
 	// Create webhook if requested.
 	webhookReq := GetWebhookReq(ctx)

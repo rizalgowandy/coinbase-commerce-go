@@ -64,7 +64,7 @@ func TestClient_CreateCharge_Integration(t *testing.T) {
 					Description: "",
 					LocalPrice:  entity.CreateChargePrice{},
 					PricingType: "",
-					Metadata:    entity.CreateChargeMetadata{},
+					Metadata:    map[string]string{},
 					RedirectURL: "",
 					CancelURL:   "",
 				},
@@ -83,9 +83,9 @@ func TestClient_CreateCharge_Integration(t *testing.T) {
 						Currency: "USD",
 					},
 					PricingType: enum.PricingTypeFixedPrice,
-					Metadata: entity.CreateChargeMetadata{
-						CustomerID:   "id_1005",
-						CustomerName: "Satoshi Nakamoto",
+					Metadata: map[string]string{
+						"customer_id":   "id_1005",
+						"customer_name": "Satoshi Nakamoto",
 					},
 					RedirectURL: "https://charge/completed/page",
 					CancelURL:   "https://charge/canceled/page",
@@ -150,9 +150,9 @@ func TestClient_ShowCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/canceled/page",
@@ -183,9 +183,9 @@ func TestClient_ShowCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/canceled/page",
@@ -347,9 +347,9 @@ func TestClient_CancelCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/canceled/page",
@@ -380,9 +380,9 @@ func TestClient_CancelCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/canceled/page",
@@ -453,9 +453,9 @@ func TestClient_ResolveCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/resolveed/page",
@@ -486,9 +486,9 @@ func TestClient_ResolveCharge_Integration(t *testing.T) {
 								Currency: "USD",
 							},
 							PricingType: enum.PricingTypeFixedPrice,
-							Metadata: entity.CreateChargeMetadata{
-								CustomerID:   "id_1005",
-								CustomerName: "Satoshi Nakamoto",
+							Metadata: map[string]string{
+								"customer_id":   "id_1005",
+								"customer_name": "Satoshi Nakamoto",
 							},
 							RedirectURL: "https://charge/completed/page",
 							CancelURL:   "https://charge/resolveed/page",
