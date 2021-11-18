@@ -38,8 +38,8 @@ func main() {
 		},
 		PricingType: enum.PricingTypeFixedPrice,
 		Metadata: map[string]string{
-			"CustomerID":   "id_1005",
-			"CustomerName": "Satoshi Nakamoto",
+			"customer_id":   "id_1005",
+			"customer_name": "Satoshi Nakamoto",
 		},
 		RedirectURL: "https://charge/completed/page",
 		CancelURL:   "https://charge/canceled/page",
