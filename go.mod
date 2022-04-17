@@ -1,6 +1,6 @@
 module github.com/rizalgowandy/coinbase-commerce-go
 
-go 1.14
+go 1.15
 
 require (
 	github.com/go-resty/resty/v2 v2.6.0
